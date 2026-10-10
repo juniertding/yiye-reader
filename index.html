@@ -34,7 +34,7 @@
     const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
     const DB='yiye-reader', STORE='books', PACKAGES='packages'; let db, books=[], packages=[], current=null, zipEntries=[], activePackage=null, stream=null, activeTab='toc';
     const prefs=Object.assign({theme:'day',fontSize:20,lineHeight:19,gutter:32,formatted:true},JSON.parse(localStorage.getItem('yiye-prefs')||'{}'));
-    const el={books:$('#books'),count:$('#count'),reader:$('#reader'),reading:$('#reading'),prose:$('#prose'),drawer:$('#drawer'),drawerList:$('#drawerList'),settings:$('#settings'),overlay:$('#overlay')};
+    const el={books:$('#books'),packages:$('#packages'),count:$('#count'),reader:$('#reader'),reading:$('#reading'),prose:$('#prose'),drawer:$('#drawer'),drawerList:$('#drawerList'),settings:$('#settings'),overlay:$('#overlay')};
     function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('show'),2400)}
     function openDB(){return new Promise((res,rej)=>{const q=indexedDB.open(DB,2);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains(STORE))q.result.createObjectStore(STORE,{keyPath:'id'});if(!q.result.objectStoreNames.contains(PACKAGES))q.result.createObjectStore(PACKAGES,{keyPath:'id'})};q.onsuccess=()=>{db=q.result;res()};q.onerror=()=>rej(q.error)})}
     function tx(name=STORE,mode='readonly'){return db.transaction(name,mode).objectStore(name)}
